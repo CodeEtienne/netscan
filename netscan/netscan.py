@@ -14,9 +14,7 @@ logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s -
 
 console = Console()
 
-COMMON_PORTS = [21, 22, 23, 25, 53, 80, 110, 139, 143, 443, 445, 3389]
-
-PORT_MEANINGS = {
+COMMON_PORTS = {
     21: "FTP",
     22: "SSH",
     23: "Telnet",
@@ -76,7 +74,7 @@ def display_results(results, show_all=False):
         for port, status in port_results:
             if not show_all and not status:
                 continue
-            service = PORT_MEANINGS.get(port, "Unknown")
+            service = COMMON_PORTS.get(port, "Unknown")
             table.add_row(ip, hostname, str(port), service, "🟢 Up" if status else "🔴 Down")
 
     console.print(table)
@@ -94,9 +92,9 @@ def main():
         description="Simple network scanner",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
-    parser.add_argument("network", help="CIDR network range to scan (e.g., 192.168.1.0/24)")
+    parser.add_argument("network", help="CIDR network range to scan (e.g., 192.168.1.0/24) or a simple hostname")
     parser.add_argument("-p", "--port", type=int, nargs="*", help="TCP port(s) to scan (e.g., -p 80 443)")
-    parser.add_argument("--common-ports", action="store_true", help="Scan a list of common ports")
+    parser.add_argument("--common-ports", action="store_true", help="Scan a list of common ports (e.g., FTP, SSH, HTTP, etc.). Common ports include: 21 (FTP), 22 (SSH), 23 (Telnet), 25 (SMTP), 53 (DNS), 80 (HTTP), 110 (POP3), 139 (NetBIOS), 143 (IMAP), 443 (HTTPS), 445 (SMB), 3389 (RDP).")
     parser.add_argument("-t", "--timeout", type=float, default=0.01, help="Connection timeout in seconds (default: 0.01)")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose mode for detailed logs")
     parser.add_argument("--output-csv", type=str, help="Path to output results in CSV format")
@@ -138,7 +136,7 @@ def main():
         console.print("[bold red]Error: Timeout must be a positive number.[/bold red]")
         exit(1)
 
-    ports = COMMON_PORTS if args.common_ports else (args.port if args.port else [80])
+    ports = list(COMMON_PORTS.keys()) if args.common_ports else (args.port if args.port else [80])
     console.print(f"[bold blue]Scanning {args.network} on ports {ports} with timeout {args.timeout}s[/bold blue]")
     results = scan_network(args.network, ports=ports, timeout=args.timeout)
     display_results(results, show_all=args.show_all)
@@ -149,7 +147,7 @@ def main():
             csv_writer.writerow(["IP Address", "Hostname", "Port", "Service", "Status"])
             for ip, hostname, port_results in results:
                 for port, status in port_results:
-                    service = PORT_MEANINGS.get(port, "Unknown")
+                    service = COMMON_PORTS.get(port, "Unknown")
                     csv_writer.writerow([ip, hostname, port, service, "Up" if status else "Down"])
         console.print(f"[bold green]Results written to {args.output_csv}[/bold green]")
 
