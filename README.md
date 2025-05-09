@@ -24,7 +24,7 @@ optional arguments:
                         TCP port(s) to scan (e.g., -p 80 443)
   --common-ports        Scan a list of common ports (e.g., FTP, SSH, HTTP, etc.). Common ports include: 21 (FTP), 22 (SSH), 23 (Telnet), 25 (SMTP), 53 (DNS), 80 (HTTP), 110 (POP3), 139 (NetBIOS), 143 (IMAP), 443 (HTTPS), 445 (SMB), 3389 (RDP), 3306 (MySQL), 5432 (PostgreSQL), 5900 (VNC), 8000 (Dev Server), 8080 (HTTP-Alt), 8443 (HTTPS-Alt), 8888 (Jupyter), 9200 (Elasticsearch), 6379 (Redis), 27017 (MongoDB), 25565 (Minecraft Server).
   -t TIMEOUT, --timeout TIMEOUT
-                        Connection timeout in seconds (default: 0.01)
+                        Connection timeout in seconds (default: 0.5)
   --verbose             Enable verbose mode for detailed logs
   --output-csv OUTPUT_CSV
                         Path to output results in CSV format
