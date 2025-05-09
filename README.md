@@ -4,7 +4,7 @@ This guide explains how to build and distribute the `netscan` package.
 
 ## About Netscan
 
-Netscan is a simple network scanner that allows you to scan a network range or a specific hostname for open ports. It provides detailed results, including IP addresses, hostnames, port statuses, and associated services. The tool is designed to be lightweight and easy to use, with options for scanning common ports, specifying custom ports, and exporting results to CSV or JSON files. It supports both IPv4 and IPv6 scanning.
+Netscan is a simple network scanner that allows you to scan a network range or a specific hostname for open ports. It provides detailed results, including IP addresses, hostnames, port statuses, and associated services. The tool is designed to be lightweight and easy to use, with options for scanning common ports, specifying custom ports, and exporting results to CSV. It supports both IPv4 and IPv6 scanning.
 
 ## Command-Line Help
 
