@@ -93,3 +93,6 @@ optional arguments:
 ## Notes
 - Ensure all dependencies are listed in `setup.py` under `install_requires`.
 - Use `--force` with `pipx` if reinstalling an existing package.
+
+## License
+This project is licensed under the MIT License. See the `LICENSE` file for details.
