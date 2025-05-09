@@ -36,6 +36,17 @@ COMMON_PORTS = {
     443: "HTTPS",
     445: "SMB",
     3389: "RDP",
+    3306: "MySQL",
+    5432: "PostgreSQL",
+    5900: "VNC",
+    8000: "Dev Server",
+    8080: "HTTP-Alt",
+    8443: "HTTPS-Alt",
+    8888: "Jupyter",
+    9200: "Elasticsearch",
+    6379: "Redis",
+    27017: "MongoDB",
+    25565: "Minecraft Server",
 }
 
 
