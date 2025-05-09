@@ -10,7 +10,7 @@ Netscan is a simple network scanner that allows you to scan a network range or a
 
 ```
 usage: netscan [-h] [-p [PORT [PORT ...]]] [--common-ports] [-t TIMEOUT]
-               [--verbose] [--output-csv OUTPUT_CSV] [--show-all]
+               [--verbose] [--output-csv OUTPUT_CSV] [--show-all] [-v]
                network
 
 Simple network scanner
@@ -29,6 +29,7 @@ optional arguments:
   --output-csv OUTPUT_CSV
                         Path to output results in CSV format
   --show-all            Show all results, including closed ports
+  -v, --version         Show the version of the netscan tool and exit
 ```
 
 ## Features

@@ -1,8 +1,18 @@
 from setuptools import setup, find_packages
+from pathlib import Path
+
+
+def get_version():
+    version_file = Path(__file__).parent / "netscan" / "__init__.py"
+    with open(version_file) as f:
+        for line in f:
+            if line.startswith("__version__"):
+                return line.split("=")[1].strip().strip('"')
+
 
 setup(
     name="netscan",
-    version="1.0.1",
+    version=get_version(),
     description="A simple network scanner",
     author="Etienne",
     author_email="etienne.jannin@gmail.com",
@@ -13,7 +23,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "netscan=netscan.netscan:main",
+            "netscan=netscan.cli:main",
         ]
     },
     classifiers=[

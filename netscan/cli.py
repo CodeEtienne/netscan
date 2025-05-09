@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from netscan import __version__
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import argparse
 import socket
@@ -174,10 +175,16 @@ def main():
         description="Simple network scanner",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+
     parser.add_argument(
         "network",
         help="CIDR network range to scan (e.g., 192.168.1.0/24) or a simple hostname",
     )
+
+    parser.add_argument(
+        "-v", "--version", action="version", version=f"netscan {__version__}"
+    )
+
     parser.add_argument(
         "-p",
         "--port",
