@@ -172,6 +172,7 @@ def resolve_hostname(ip):
 
 def main():
     parser = argparse.ArgumentParser(
+        prog="netscan",
         description="Simple network scanner",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
@@ -202,7 +203,7 @@ def main():
         "--timeout",
         type=float,
         default=0.5,
-        help="Connection timeout in seconds (default: 0.01)",
+        help="Connection timeout in seconds",
     )
     parser.add_argument(
         "--verbose", action="store_true", help="Enable verbose mode for detailed logs"

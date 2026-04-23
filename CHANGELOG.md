@@ -8,27 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Modern Python packaging with `pyproject.toml`
-- Standalone binary builds with PyInstaller
-- GitHub Actions CI/CD for automated building
-- Makefile for development automation
-- Development tools configuration (black, isort, flake8, mypy)
-- Module entry point (`__main__.py`)
-- Comprehensive documentation
+- Documentation cleanup to match the current repository layout and behavior
 
 ### Changed
-- Updated README with modern installation and usage instructions
-- Improved project structure and documentation
-
-### Deprecated
-- Legacy `setup.py` approach (still supported for backward compatibility)
+- Removed unused `netifaces` dependency and stale PyInstaller hidden import
+- Fixed CLI help text for the timeout option and normalized the displayed program name
 
 ## [1.0.1] - 2025-01-XX
 
 ### Added
 - CSV export functionality
 - Verbose logging mode
-- IPv6 support
 - Hostname resolution for scanned IPs
 - Common ports scanning feature
 - Connection timeout configuration

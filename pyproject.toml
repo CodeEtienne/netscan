@@ -33,7 +33,6 @@ classifiers = [
 
 dependencies = [
     "rich>=10.0.0",
-    "netifaces>=0.11.0",
 ]
 
 [project.optional-dependencies]
@@ -56,9 +55,6 @@ netscan = "netscan.cli:main"
 
 [tool.setuptools]
 packages = ["netscan"]
-
-[tool.setuptools.package-data]
-netscan = ["py.typed"]
 
 [tool.black]
 line-length = 88

@@ -20,4 +20,3 @@ twine>=4.0.0
 
 # Core dependencies
 rich>=10.0.0
-netifaces>=0.11.0
