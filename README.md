@@ -1,12 +1,96 @@
 # Netscan: A Powerful and Lightweight Network Scanner
 
-This guide explains how to build, install, and use the `netscan` package.
+**A fast, efficient network scanner for discovering hosts and scanning ports with modern Python packaging.**
 
 ## About Netscan
 
-Netscan is a simple network scanner that allows you to scan a network range or a specific hostname for open ports. It provides detailed results, including IP addresses, hostnames, port statuses, and associated services. The tool is designed to be lightweight and easy to use, with options for scanning common ports, specifying custom ports, and exporting results to CSV. It supports both IPv4 and IPv6 scanning.
+Netscan is a simple yet powerful network scanner that allows you to scan a network range or a specific hostname for open ports. It provides detailed results, including IP addresses, hostnames, port statuses, and associated services. The tool is designed to be lightweight and easy to use, with options for scanning common ports, specifying custom ports, and exporting results to CSV. It supports both IPv4 and IPv6 scanning.
 
-## Command-Line Help
+### Features
+
+- 🚀 **Fast scanning** - Multi-threaded port scanning with configurable concurrency
+- 📊 **Flexible output** - Display results in the terminal or export to CSV
+- 🔍 **Smart detection** - ICMP ping-based host discovery or TCP port scanning
+- 🌐 **IPv4 & IPv6 support** - Works with both address families
+- 🎨 **Rich formatting** - Beautiful, color-coded terminal output
+- 🔧 **Customizable** - Adjust timeout, ports, and scanning behavior
+- 📦 **Easy distribution** - Standalone binary or Python package
+
+## Installation
+
+### Option 1: Standalone Binary (Recommended for End Users)
+
+Download the latest binary for your platform from [Releases](https://github.com/CodeEtienne/netscan/releases):
+
+```bash
+# Linux
+wget https://github.com/CodeEtienne/netscan/releases/download/v1.0.1/netscan
+chmod +x netscan
+./netscan --help
+
+# macOS / Windows
+# Download from Releases and run directly
+```
+
+**Advantages:**
+- No Python installation required
+- Works out of the box
+- Easy to distribute to non-technical users
+
+### Option 2: Python Package via pip (Recommended for Developers)
+
+```bash
+# Install from PyPI (when published)
+pip install netscan
+
+# Or install from local wheel
+pip install dist/netscan-1.0.1-py3-none-any.whl
+
+# Or use pipx for isolated environment
+pipx install netscan
+```
+
+### Option 3: Development Installation
+
+```bash
+git clone https://github.com/CodeEtienne/netscan.git
+cd netscan
+make install-dev
+source .venv/bin/activate
+```
+
+## Quick Start
+
+```bash
+# Scan a single host
+netscan 192.168.1.1
+
+# Scan a network range
+netscan 192.168.1.0/24
+
+# Scan specific ports
+netscan 192.168.1.0/24 -p 80 443 22
+
+# Scan common ports (FTP, SSH, HTTP, HTTPS, etc.)
+netscan 192.168.1.0/24 --common-ports
+
+# Scan with custom timeout
+netscan 192.168.1.0/24 --common-ports -t 1.0
+
+# Export results to CSV
+netscan 192.168.1.0/24 --common-ports --output-csv results.csv
+
+# Scan by hostname
+netscan example.com
+
+# Verbose output
+netscan 192.168.1.0/24 --verbose
+
+# Show all ports (including closed ones)
+netscan 192.168.1.0/24 -p 22 80 443 --show-all
+```
+
+## Usage Reference
 
 ```
 usage: netscan [-h] [-p [PORT [PORT ...]]] [--common-ports] [-t TIMEOUT]
@@ -22,7 +106,7 @@ optional arguments:
   -h, --help            show this help message and exit
   -p [PORT [PORT ...]], --port [PORT [PORT ...]]
                         TCP port(s) to scan (e.g., -p 80 443)
-  --common-ports        Scan a list of common ports (e.g., FTP, SSH, HTTP, etc.). Common ports include: 21 (FTP), 22 (SSH), 23 (Telnet), 25 (SMTP), 53 (DNS), 80 (HTTP), 110 (POP3), 139 (NetBIOS), 143 (IMAP), 443 (HTTPS), 445 (SMB), 3389 (RDP), 3306 (MySQL), 5432 (PostgreSQL), 5900 (VNC), 8000 (Dev Server), 8080 (HTTP-Alt), 8443 (HTTPS-Alt), 8888 (Jupyter), 9200 (Elasticsearch), 6379 (Redis), 27017 (MongoDB), 25565 (Minecraft Server).
+  --common-ports        Scan a list of common ports (21, 22, 53, 80, 443, 3306, 5432, etc.)
   -t TIMEOUT, --timeout TIMEOUT
                         Connection timeout in seconds (default: 0.5)
   --verbose             Enable verbose mode for detailed logs
@@ -32,68 +116,227 @@ optional arguments:
   -v, --version         Show the version of the netscan tool and exit
 ```
 
-## Features
+## Building from Source
 
-- Scan both IPv4 and IPv6 networks.
-- Specify custom ports or scan a predefined list of common ports.
-- Export scan results to CSV formats.
-- Display detailed results, including IP addresses, hostnames, port statuses, and associated services.
-- Option to show all results, including closed ports.
-- Adjustable connection timeout for scans.
-- Verbose mode for detailed logging.
+### Prerequisites
 
-## Steps to Build the Package
+- Python 3.8+
+- `pip` and `build`
+- `PyInstaller` (for standalone binary)
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/yourusername/netscan.git
-   ```
+### Quick Build
 
-2. **Navigate to the Project Directory**
-   ```bash
-   cd netscan
-   ```
+```bash
+# View all available commands
+make help
 
-3. **Clean Previous Builds**
-   ```bash
-   rm -rf build dist *.egg-info
-   ```
+# Install in development mode with all tools
+make install-dev
 
-4. **Build the Package**
-   ```bash
-   python3 setup.py sdist bdist_wheel
-   ```
+# Build wheel distribution
+make build
 
-   This will generate the `.whl` file in the `dist/` directory.
+# Build standalone binary
+make build-binary
 
-5. **Verify the Build**
-   Navigate to the `dist/` directory and confirm the presence of the `.whl` file:
-   ```bash
-   ls dist/
-   ```
+# Build both
+make dist
+```
 
-## Steps to Install the Package
+### Detailed Build Steps
 
-1. **Copy the `.whl` File**
-   Transfer the `.whl` file to the target machine using `scp` or another method:
-   ```bash
-   scp dist/netscan-1.0.0-py3-none-any.whl <user>@<target-machine>:<destination-path>
-   ```
+#### 1. Build Python Wheel (Recommended)
 
-2. **Install the Package**
-   On the target machine, install the package using `pip` or `pipx`:
-   ```bash
-   pip install netscan-1.0.0-py3-none-any.whl
-   ```
+```bash
+# Install build tools
+pip install build
 
-   Or, if using `pipx`:
-   ```bash
-   pipx install netscan-1.0.0-py3-none-any.whl
-   ```
+# Build
+python -m build --wheel
 
-## Notes
-- Ensure all dependencies are listed in `setup.py` under `install_requires`.
-- Use `--force` with `pipx` if reinstalling an existing package.
+# Output: dist/netscan-1.0.1-py3-none-any.whl
+```
+
+**Advantages:**
+- Lightweight (~50-100 KB)
+- Works on any system with Python 3.8+
+- Standard Python distribution format
+
+#### 2. Build Standalone Binary (Recommended for End Users)
+
+```bash
+# Install PyInstaller
+pip install pyinstaller
+
+# Install netscan in current environment
+pip install -e .
+
+# Build binary
+python -m PyInstaller netscan.spec
+
+# Output: dist/netscan (executable binary)
+```
+
+**Advantages:**
+- Single executable file
+- No Python interpreter needed
+- Easy to distribute
+- Works on systems without Python
+
+**Note:** Standalone binaries are larger (~100-200 MB depending on OS) due to bundled Python runtime.
+
+#### 3. Install Locally
+
+```bash
+# Option A: Install wheel
+pip install dist/netscan-1.0.1-py3-none-any.whl
+
+# Option B: Install binary (if built)
+sudo cp dist/netscan /usr/local/bin/netscan
+sudo chmod +x /usr/local/bin/netscan
+
+# Option C: Install in development mode
+pip install -e .
+```
+
+## Development Workflow
+
+### Setup Development Environment
+
+```bash
+make install-dev
+source .venv/bin/activate
+```
+
+### Available Commands
+
+```bash
+make lint              # Run code linting
+make format            # Auto-format code
+make test              # Run tests (if configured)
+make clean             # Remove build artifacts
+make clean-all         # Remove everything including venv
+```
+
+### Code Style
+
+This project uses:
+- **black** for code formatting
+- **isort** for import sorting
+- **flake8** for linting
+- **mypy** for type checking (optional)
+
+### Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Make your changes and run: `make format && make lint`
+4. Commit and push to your fork
+5. Submit a pull request
+
+## Continuous Integration
+
+Builds are automatically triggered on git tags (e.g., `git tag v1.0.1`) via GitHub Actions. This builds binaries for:
+- Linux (x86_64)
+- macOS (x86_64)
+- Windows (x86_64)
+
+Artifacts are automatically uploaded to GitHub Releases.
+
+## Distribution
+
+### Publish to PyPI
+
+```bash
+# Build distributions
+python -m build
+
+# Upload to PyPI (requires credentials)
+python -m twine upload dist/
+```
+
+### Create GitHub Release
+
+```bash
+# Tag the release
+git tag v1.0.1
+git push origin v1.0.1
+
+# GitHub Actions automatically builds and releases binaries
+```
+
+## Troubleshooting
+
+### "Permission denied" when running binary
+
+```bash
+chmod +x ./netscan
+```
+
+### "Module not found" error
+
+Ensure all dependencies are installed:
+```bash
+pip install -r requirements.txt
+```
+
+Or in development:
+```bash
+make install-dev
+```
+
+### Build fails with PyInstaller
+
+Make sure you have all dependencies installed:
+```bash
+pip install -e .
+pip install pyinstaller
+```
+
+## Architecture
+
+### Project Structure
+
+```
+netscan/
+├── __init__.py           # Version and metadata
+├── __main__.py           # Module entry point
+└── cli.py                # Main CLI and scanning logic
+
+Configuration Files:
+├── pyproject.toml        # Modern Python packaging config
+├── setup.py              # Legacy setup (still supported)
+├── Makefile              # Development automation
+├── netscan.spec          # PyInstaller configuration
+└── .github/workflows/    # CI/CD automation
+```
+
+### How It Works
+
+1. **Network Scanning:** Parses CIDR notation or resolves hostnames
+2. **Host Discovery:** Uses ICMP ping or TCP handshake to find live hosts
+3. **Port Scanning:** Multi-threaded TCP connection attempts on specified ports
+4. **Output:** Displays results in formatted tables or CSV export
+
+## Performance Tips
+
+- **Fast scanning:** Use `-t 0.1` for aggressive scans on LAN (requires root/admin)
+- **Large networks:** Reduce timeout with `-t 0.2` to complete scans faster
+- **Specific ports:** Scanning fewer ports significantly speeds up the scan
+- **Common ports:** Use `--common-ports` instead of scanning all 65535 ports
+
+## Limitations
+
+- Requires root/admin privileges for certain scan types
+- IPv6 scanning may have limitations depending on network configuration
+- Reverse DNS lookups can slow down scanning
 
 ## License
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+## Support
+
+- **Issues:** [GitHub Issues](https://github.com/CodeEtienne/netscan/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/CodeEtienne/netscan/discussions)
+- **Email:** etienne.jannin@gmail.com

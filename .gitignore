@@ -18,6 +18,11 @@ dist/
 *.egg-info/
 *.egg
 
+# PyInstaller
+*.manifest
+*.spec.bak
+build-PyInstaller/
+
 # Installer logs
 debug.log
 
@@ -29,6 +34,7 @@ htmlcov/
 *.cover
 *.py,cover
 .hypothesis/
+.pytest_cache/
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -47,3 +53,8 @@ htmlcov/
 
 # Windows
 Thumbs.db
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
