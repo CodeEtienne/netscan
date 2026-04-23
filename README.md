@@ -127,32 +127,47 @@ optional arguments:
 ### Quick Build
 
 ```bash
-# View all available commands
+# 1. Set up development environment (one-time)
+make install-dev
+source .venv/bin/activate
+
+# 2. View all available commands
 make help
 
-# Install in development mode with all tools
-make install-dev
+# 3. Build your distribution
+make build              # Build wheel distribution
+make build-binary       # Build standalone binary
+make dist               # Build both wheel and binary
+```
 
-# Build wheel distribution
-make build
-
-# Build standalone binary
-make build-binary
-
-# Build both
-make dist
+**Important:** You must run steps 1-2 once before building. After that, always activate the virtual environment:
+```bash
+source .venv/bin/activate
 ```
 
 ### Detailed Build Steps
 
+#### Setup (Required Once)
+
+```bash
+# Create virtual environment and install dependencies
+make install-dev
+
+# Activate the virtual environment
+source .venv/bin/activate
+
+# After activation, you should see (.venv) in your shell prompt
+```
+
 #### 1. Build Python Wheel (Recommended)
 
 ```bash
-# Install build tools
-pip install build
+# Ensure virtual environment is activated
+source .venv/bin/activate
 
 # Build
-python -m build --wheel
+make build
+# Or manually: python -m build --wheel
 
 # Output: dist/netscan-1.0.1-py3-none-any.whl
 ```
@@ -165,16 +180,14 @@ python -m build --wheel
 #### 2. Build Standalone Binary (Recommended for End Users)
 
 ```bash
-# Install PyInstaller
-pip install pyinstaller
+# Ensure virtual environment is activated
+source .venv/bin/activate
 
-# Install netscan in current environment
-pip install -e .
+# Build binary using the Makefile (all dependencies already installed)
+make build-binary
+# Or manually: python -m PyInstaller netscan.spec
 
-# Build binary
-python -m PyInstaller netscan.spec
-
-# Output: dist/netscan (executable binary)
+# Output: dist/netscan (executable binary, ~12 MB)
 ```
 
 **Advantages:**
@@ -185,15 +198,20 @@ python -m PyInstaller netscan.spec
 
 **Note:** Standalone binaries are larger (~100-200 MB depending on OS) due to bundled Python runtime.
 
-#### 3. Install Locally
+#### 3. Install & Test
 
 ```bash
-# Option A: Install wheel
-pip install dist/netscan-1.0.1-py3-none-any.whl
+# Test the built binary directly
+./dist/netscan --help
+./dist/netscan --version
 
-# Option B: Install binary (if built)
+# Option A: Install binary system-wide
 sudo cp dist/netscan /usr/local/bin/netscan
 sudo chmod +x /usr/local/bin/netscan
+netscan --help
+
+# Option B: Install wheel package (if built)
+pip install dist/netscan-1.0.1-py3-none-any.whl
 
 # Option C: Install in development mode
 pip install -e .

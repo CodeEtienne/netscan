@@ -42,6 +42,13 @@ source .venv/bin/activate
 ```
 
 ### Common Commands
+
+**Always activate the virtual environment first:**
+```bash
+source .venv/bin/activate
+```
+
+Then run any of these:
 ```bash
 make help          # Show all commands
 make format        # Format code
@@ -66,13 +73,26 @@ netscan.spec         # PyInstaller configuration
 
 ### Build & Release Workflow
 
-1. **Local Testing**
+1. **Setup (One-time)**
    ```bash
-   make build-binary
-   ./dist/netscan --version
+   make install-dev
+   source .venv/bin/activate
    ```
 
-2. **Release**
+2. **Local Testing**
+   ```bash
+   # Ensure venv is activated
+   source .venv/bin/activate
+   
+   # Build standalone binary
+   make build-binary
+   
+   # Test it
+   ./dist/netscan --version
+   ./dist/netscan --help
+   ```
+
+3. **Release**
    ```bash
    git tag v1.0.2
    git push origin v1.0.2
@@ -82,22 +102,30 @@ netscan.spec         # PyInstaller configuration
    # - Windows (x86_64)
    ```
 
-3. **Publish to PyPI**
+4. **Publish to PyPI**
    ```bash
+   source .venv/bin/activate
    python -m build
    python -m twine upload dist/
    ```
 
 ### Testing Locally
+
+**Ensure virtual environment is activated:**
 ```bash
-# Test installed command
+source .venv/bin/activate
+```
+
+Then run your tests:
+```bash
+# Test installed command (if installed via pip)
 netscan 192.168.1.0/24 --help
 
 # Test as module
 python -m netscan --version
 
-# Test scan
-netscan 8.8.8.8 -p 53 80 443
+# Test with built binary
+./dist/netscan 8.8.8.8 -p 53 80 443
 ```
 
 ---
