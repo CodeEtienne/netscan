@@ -24,11 +24,20 @@ netscan 192.168.1.0/24
 # Scan specific ports
 netscan 192.168.1.10 -p 22 80 443
 
+# Scan port lists and ranges
+netscan 192.168.1.10 -p 22,80,443,8000-8010
+
 # Scan the common port list
 netscan 192.168.1.0/24 --common-ports
 
 # Export CSV
 netscan 192.168.1.0/24 --common-ports --output-csv results.csv
+
+# Control concurrency
+netscan 192.168.1.0/24 --common-ports --workers 32
+
+# Emit JSON
+netscan 192.168.1.10 -p 22,80 --json
 
 # Run as a module
 python3 -m netscan --version
@@ -50,7 +59,7 @@ make lint
 make test
 ```
 
-`make test` is currently a placeholder because the repository does not yet contain a configured automated test suite.
+`make test` runs the pytest suite in `tests/`.
 
 ## Project Files
 
@@ -70,6 +79,7 @@ pyproject.toml
 requirements-dev.txt
 requirements.txt
 README.md
+tests/
 ```
 
 See [README.md](README.md) for the full usage guide.

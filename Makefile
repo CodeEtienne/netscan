@@ -61,7 +61,7 @@ format:
 	$(PYTHON) -m isort netscan/
 
 test:
-	@echo "No tests configured yet. Add pytest configuration to run tests."
+	$(PYTHON) -m pytest
 
 clean:
 	rm -rf build/ dist/ *.egg-info .eggs .pytest_cache .mypy_cache __pycache__

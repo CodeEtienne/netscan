@@ -43,7 +43,7 @@ make lint      # Check for issues with flake8
 
 Run tests with:
 ```bash
-make test      # Placeholder until automated tests are added
+make test      # Run the pytest suite
 ```
 
 ### Building
@@ -105,7 +105,7 @@ Example: `feat: add IPv6 support for network scanning`
 ## Pull Request Guidelines
 
 - Keep PRs focused on a single feature or fix
-- Include tests for new functionality when a test harness is added
+- Include tests for new functionality
 - Update documentation as needed
 - Ensure formatting, linting, and builds pass
 - Respond to review feedback promptly
@@ -115,7 +115,7 @@ Example: `feat: add IPv6 support for network scanning`
 - **Python 3.8+ compatibility** - Ensure code works on Python 3.8 and later
 - **Type hints** - Encourage type hints for new code
 - **Documentation** - Add docstrings to functions and modules
-- **Tests** - Add tests alongside new features once the test suite is in place
+- **Tests** - Add or update pytest coverage alongside new features
 
 ## Reporting Issues
 
